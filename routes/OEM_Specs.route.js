@@ -43,6 +43,19 @@ const OEM_SpecsRoute = express.Router();
     res.status(500).json(err);
   }
 });
+
+
+OEM_SpecsRoute.get("/search/:q", async (req, res) => {
+  const data = req.params.q;
+
+  try {
+    const user = await OEMModel.find(  { model_name: { $regex: data || "", $options: 'i' } },);
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
   
 
 module.exports = {
