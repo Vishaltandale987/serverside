@@ -60,7 +60,7 @@ userrouter.post("/login", async (req, res) => {
         if (result) {
           const token = jwt.sign({ userID: user[0]._id }, "masai");
 
-          res.send({ massege: "login successful", token: token, userID: user[0]._id });
+          res.send({ massege: "login successful", token: token, userID: user[0]._id, role:user[0].role });
         } else {
           res.send({ massege: "something went wrong" });
         }
