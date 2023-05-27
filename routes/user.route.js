@@ -17,8 +17,9 @@ userrouter.get("/", async (req, res) => {
 
 });
 
+
 userrouter.post("/register" , async(req,res)=>{
-  const {email,password,role}=req.body
+  const {email,password,username,role}=req.body
 
   const userEmail=await User.findOne({email})
 
@@ -32,7 +33,7 @@ userrouter.post("/register" , async(req,res)=>{
               if(err){
                   console.log(err)
               }else{
-                      const user = new User({email,password:secure_password,role})
+                      const user = new User({email,password:secure_password,username,role})
                       await user.save()
                       console.log(user)
                           res.send({"message" :"Registered Successfully"})
@@ -49,6 +50,8 @@ userrouter.post("/register" , async(req,res)=>{
 
 })
 
+
+
 //login
 userrouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -60,7 +63,7 @@ userrouter.post("/login", async (req, res) => {
         if (result) {
           const token = jwt.sign({ userID: user[0]._id }, "masai");
 
-          res.send({ massege: "login successful", token: token, userID: user[0]._id, role:user[0].role });
+          res.send({ massege: "login successful", token: token, userID: user[0]._id, role: user[0].role });
         } else {
           res.send({ massege: "something went wrong" });
         }
@@ -104,13 +107,13 @@ userrouter.put("/:id", async (req, res) => {
 //delete user
 userrouter.delete("/:id", async (req, res) => {
   // if (req.body.userId === req.params.id || req.body.isAdmin) {
-    try {
-      await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("Account has been deleted");
-    } catch (err) {
-      return res.status(500).json(err);
-    }
-  
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).json("Account has been deleted");
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+
 });
 
 //get a user by id
@@ -135,7 +138,7 @@ userrouter.get("/search/:username", async (req, res) => {
   const userdata = req.params.username;
 
   try {
-    const user = await User.find(  { username: { $regex: userdata || "", $options: 'i' } },);
+    const user = await User.find({ username: { $regex: userdata || "", $options: 'i' } },);
 
     res.status(200).json(user);
   } catch (err) {
