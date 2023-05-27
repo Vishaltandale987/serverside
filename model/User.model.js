@@ -3,37 +3,11 @@
 const mongoose = require("mongoose")
 
 
-// const commentSchema = mongoose.Schema({
-//   userId:String,
-//   comment:String
-// })
 
-
-// const postSchema =  mongoose.Schema({
-//     post_image: String,
-//     description: String,
-//     like: Number,
-//     all_comment: [commentSchema]
-    
-// })
 
 
 const userSchema = mongoose.Schema({
-    // lastName: String,
-    // firstName: String,
-    // password: String,
-    // email: String,
-    // avatar: String,
-    // coverimg: String,
-    // post: [postSchema]
-
-    username: {
-        type: String,
-        require: true,
-        min: 3,
-        max: 20,
-        unique: true,
-      },
+    
       email: {
         type: String,
         required: true,
@@ -45,10 +19,12 @@ const userSchema = mongoose.Schema({
         required: true,
         min: 6,
       },
-      profilePicture: {
+      role: {
         type: String,
-        default: "",
+        required: true,
+        
       },
+    
       
     
 

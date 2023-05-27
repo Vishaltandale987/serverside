@@ -18,7 +18,7 @@ userrouter.get("/", async (req, res) => {
 });
 
 userrouter.post("/register" , async(req,res)=>{
-  const {email,password,username,profilePicture}=req.body
+  const {email,password,role}=req.body
 
   const userEmail=await User.findOne({email})
 
@@ -32,7 +32,7 @@ userrouter.post("/register" , async(req,res)=>{
               if(err){
                   console.log(err)
               }else{
-                      const user = new User({email,password:secure_password,username,profilePicture})
+                      const user = new User({email,password:secure_password,role})
                       await user.save()
                       console.log(user)
                           res.send({"message" :"Registered Successfully"})
